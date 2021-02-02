@@ -69,12 +69,17 @@ reduced_tibble <-
 #Use the tableR function to query the NHS Data Dictionary website and return the associate tibble
 
 treatment_function_lookup <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
-                          xpath = reduced_tibble$xpath_perm_code, 
+                          xpath = reduced_tibble$xpath_nat_code, 
                           title = "NHS Hospital Activity Treatment Function Codes")
+
+treatment_function_meta <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
+                                                     xpath=reduced_tibble$xpath_also_known,
+                                                     title = "Activity Treatment Function Code Meta")
 
 # The query has returned results, if the url does not have a lookup table an error will be thrown
 
 print(head(treatment_function_lookup,10))
+print(treatment_function_meta)
   
 
 ## ----lookup_fields------------------------------------------------------------

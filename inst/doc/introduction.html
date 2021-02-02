@@ -393,14 +393,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>nhs_tibble &lt;-<span class="st"> </span>NHSDataDictionaRy<span class="op">::</span><span class="kw">nhs_data_elements</span>()</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw">print</span>(<span class="kw">head</span>(nhs_tibble))</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; # A tibble: 6 x 5</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;   link_name      url          link_short      full_url      xpath_perm_code     </span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;           &lt;chr&gt;         &lt;chr&gt;               </span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; 1 ABBREVIATED M~ data_elemen~ abbreviated_me~ https://data~ &quot;//*[@id=\&quot;element_~</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; 2 ABDOMINAL X-R~ data_elemen~ abdominal_x-ra~ https://data~ &quot;//*[@id=\&quot;element_~</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; 3 ABDOMINAL X-R~ data_elemen~ abdominal_x-ra~ https://data~ &quot;//*[@id=\&quot;element_~</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; 4 ABDOMINAL X-R~ data_elemen~ abdominal_x-ra~ https://data~ &quot;//*[@id=\&quot;element_~</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; 5 ABLATIVE THER~ data_elemen~ ablative_thera~ https://data~ &quot;//*[@id=\&quot;element_~</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; 6 ABNORMALITY D~ data_elemen~ abnormality_de~ https://data~ &quot;//*[@id=\&quot;element_~</span></span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;   link_name     url        full_url      xpath_nat_code     xpath_also_known    </span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;              &lt;chr&gt;               </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; 1 ABBREVIATED ~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; 2 ABDOMINAL X-~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; 3 ABDOMINAL X-~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; 4 ABDOMINAL X-~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; 5 ABLATIVE THE~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; 6 ABNORMALITY ~ data_elem~ https://data~ &quot;//*[@id=\&quot;elemen~ &quot;//*[@id=\&quot;element_~</span></span></code></pre></div>
 <p>This tibble gives a list of all lookups and their associated xpath codes i.e. a direct link to an HTML element, which is the standard way of extracting HTML DOM content. This is where the other functions in the package become powerful.</p>
 </div>
 <div id="text-manipulation-of-the-tibble" class="section level2">
@@ -511,25 +511,36 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb9-5"><a href="#cb9-5"></a><span class="co">#Use the tableR function to query the NHS Data Dictionary website and return the associate tibble</span></span>
 <span id="cb9-6"><a href="#cb9-6"></a></span>
 <span id="cb9-7"><a href="#cb9-7"></a>treatment_function_lookup &lt;-<span class="st"> </span>NHSDataDictionaRy<span class="op">::</span><span class="kw">tableR</span>(<span class="dt">url=</span>reduced_tibble<span class="op">$</span>full_url,</span>
-<span id="cb9-8"><a href="#cb9-8"></a>                          <span class="dt">xpath =</span> reduced_tibble<span class="op">$</span>xpath_perm_code, </span>
+<span id="cb9-8"><a href="#cb9-8"></a>                          <span class="dt">xpath =</span> reduced_tibble<span class="op">$</span>xpath_nat_code, </span>
 <span id="cb9-9"><a href="#cb9-9"></a>                          <span class="dt">title =</span> <span class="st">&quot;NHS Hospital Activity Treatment Function Codes&quot;</span>)</span>
 <span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co"># The query has returned results, if the url does not have a lookup table an error will be thrown</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="kw">print</span>(<span class="kw">head</span>(treatment_function_lookup,<span class="dv">10</span>))</span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; # A tibble: 10 x 4</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt;    Code  Description                    Dict_Type            DttmExtracted      </span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                          &lt;chr&gt;                &lt;dttm&gt;             </span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt;  1 199   Non-UK provider; TREATMENT FU~ NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt;  2 499   Non-UK provider; TREATMENT FU~ NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt;  3 100   General Surgery Service        NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;  4 101   Urology Service                NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;  5 102   Transplant Surgery Service     NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt;  6 103   Breast Surgery Service         NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt;  7 104   Colorectal Surgery Service     NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt;  8 105   Hepatobiliary and Pancreatic ~ NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt;  9 106   Upper Gastrointestinal Surger~ NHS Hospital Activi~ 2021-01-21 15:18:36</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt; 10 107   Vascular Surgery Service       NHS Hospital Activi~ 2021-01-21 15:18:36</span></span></code></pre></div>
+<span id="cb9-11"><a href="#cb9-11"></a>treatment_function_meta &lt;-<span class="st"> </span>NHSDataDictionaRy<span class="op">::</span><span class="kw">tableR</span>(<span class="dt">url=</span>reduced_tibble<span class="op">$</span>full_url,</span>
+<span id="cb9-12"><a href="#cb9-12"></a>                                                     <span class="dt">xpath=</span>reduced_tibble<span class="op">$</span>xpath_also_known,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>                                                     <span class="dt">title =</span> <span class="st">&quot;Activity Treatment Function Code Meta&quot;</span>)</span>
+<span id="cb9-14"><a href="#cb9-14"></a></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co"># The query has returned results, if the url does not have a lookup table an error will be thrown</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="kw">print</span>(<span class="kw">head</span>(treatment_function_lookup,<span class="dv">10</span>))</span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; # A tibble: 10 x 4</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt;    Code  Description                Dict_Type                DttmExtracted      </span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                      &lt;chr&gt;                    &lt;dttm&gt;             </span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;  1 100   General Surgery Service    NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt;  2 101   Urology Service            NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt;  3 102   Transplant Surgery Service NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt;  4 103   Breast Surgery Service     NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt;  5 104   Colorectal Surgery Service NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt;  6 105   Hepatobiliary and Pancrea~ NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="co">#&gt;  7 106   Upper Gastrointestinal Su~ NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a><span class="co">#&gt;  8 107   Vascular Surgery Service   NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt;  9 108   Spinal Surgery Service     NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt; 10 109   Bariatric Surgery Service  NHS Hospital Activity T~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-31"><a href="#cb9-31"></a><span class="kw">print</span>(treatment_function_meta)</span>
+<span id="cb9-32"><a href="#cb9-32"></a><span class="co">#&gt; # A tibble: 2 x 3</span></span>
+<span id="cb9-33"><a href="#cb9-33"></a><span class="co">#&gt;   `apply(simple_lookup_table_scraped, 2~ Dict_Type           DttmExtracted      </span></span>
+<span id="cb9-34"><a href="#cb9-34"></a><span class="co">#&gt;   &lt;chr&gt;                                  &lt;chr&gt;               &lt;dttm&gt;             </span></span>
+<span id="cb9-35"><a href="#cb9-35"></a><span class="co">#&gt; 1 Plural                                 Activity Treatment~ 2021-02-01 17:28:01</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a><span class="co">#&gt; 2 ACTIVITY TREATMENT FUNCTION CODES      Activity Treatment~ 2021-02-01 17:28:01</span></span></code></pre></div>
+<p>Not all lookups will have associated national code tables, if they are not returned you will receive a message saying the lookup table is not available for this NHS Data Dictionary type.</p>
 </div>
 <div id="using-my-lookup-with-nhs-data" class="section level2">
 <h2>Using my lookup with NHS data</h2>
@@ -546,11 +557,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; # A tibble: 5 x 6</span></span>
 <span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt;   SpecCode ActivityCounts Month Description     Dict_Type    DttmExtracted      </span></span>
 <span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;        &lt;dttm&gt;             </span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1 101                 254 May   Urology Service NHS Hospita~ 2021-01-21 15:18:36</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; 2 102                 251 May   Transplant Sur~ NHS Hospita~ 2021-01-21 15:18:36</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; 3 103                 246 May   Breast Surgery~ NHS Hospita~ 2021-01-21 15:18:36</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; 4 104                 253 May   Colorectal Sur~ NHS Hospita~ 2021-01-21 15:18:36</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; 5 105                 247 May   Hepatobiliary ~ NHS Hospita~ 2021-01-21 15:18:36</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1 101                 251 May   Urology Service NHS Hospita~ 2021-02-01 17:28:01</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; 2 102                 249 May   Transplant Sur~ NHS Hospita~ 2021-02-01 17:28:01</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; 3 103                 249 May   Breast Surgery~ NHS Hospita~ 2021-02-01 17:28:01</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; 4 104                 248 May   Colorectal Sur~ NHS Hospita~ 2021-02-01 17:28:01</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; 5 105                 251 May   Hepatobiliary ~ NHS Hospita~ 2021-02-01 17:28:01</span></span>
 <span id="cb10-18"><a href="#cb10-18"></a>  </span>
 <span id="cb10-19"><a href="#cb10-19"></a><span class="co"># This easily joins the lookup on to your data</span></span>
 <span id="cb10-20"><a href="#cb10-20"></a>  </span></code></pre></div>
@@ -582,7 +593,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb11-21"><a href="#cb11-21"></a><span class="co">#&gt; [2] &lt;body class=&quot;wh_topic_page frmBody&quot;&gt;\n        &lt;a href=&quot;#wh_topic_body&quot; cl ...</span></span>
 <span id="cb11-22"><a href="#cb11-22"></a><span class="co">#&gt; </span></span>
 <span id="cb11-23"><a href="#cb11-23"></a><span class="co">#&gt; $datetime_access</span></span>
-<span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt; [1] &quot;2021-01-21 15:18:36 GMT&quot;</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt; [1] &quot;2021-02-01 17:28:02 GMT&quot;</span></span>
 <span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt; </span></span>
 <span id="cb11-26"><a href="#cb11-26"></a><span class="co">#&gt; $person_accessed</span></span>
 <span id="cb11-27"><a href="#cb11-27"></a><span class="co">#&gt; [1] &quot;GARYH - LAPTOP-GE3S96EI&quot;</span></span></code></pre></div>
