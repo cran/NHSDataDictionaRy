@@ -7,6 +7,8 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(NHSDataDictionaRy)
 library(dplyr)
+library(magrittr)
+library(tibble)
 
 ## ----extracting_dd------------------------------------------------------------
 nhs_tibble <- NHSDataDictionaRy::nhs_data_elements()
@@ -61,25 +63,34 @@ print(head(results, 20))
 #browseURL(results$url[18])
 
 
-## ----tableR-------------------------------------------------------------------
+## ----tableR_example-----------------------------------------------------------
 # Filter by a specific lookup required
 reduced_tibble <- 
   dplyr::filter(nhs_tibble, link_name == "ACTIVITY TREATMENT FUNCTION CODE")
 
 #Use the tableR function to query the NHS Data Dictionary website and return the associate tibble
 
-treatment_function_lookup <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
+national_codes <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
                           xpath = reduced_tibble$xpath_nat_code, 
-                          title = "NHS Hospital Activity Treatment Function Codes")
+                          title = "NHS Hospital Activity Treatment Function National Codes")
 
-treatment_function_meta <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
-                                                     xpath=reduced_tibble$xpath_also_known,
-                                                     title = "Activity Treatment Function Code Meta")
+default_codes <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
+                          xpath = reduced_tibble$xpath_default_code, 
+                          title = "NHS Hospital Activity Treatment Function Default Codes")
+
+
+# Here you could merge the codes - as you will have national and default codes
+
+merged_frame <- national_codes %>% 
+  dplyr::bind_rows(default_codes)
+
 
 # The query has returned results, if the url does not have a lookup table an error will be thrown
 
-print(head(treatment_function_lookup,10))
-print(treatment_function_meta)
+print(head(national_codes,10))
+print(head(default_codes), 10)
+print(head(merged_frame))
+
   
 
 ## ----lookup_fields------------------------------------------------------------
@@ -91,7 +102,7 @@ act_aggregations <- tibble(SpecCode = as.character(c(101,102,103, 104, 105)),
 # Use dplyr to join the NHS activity by specialty code
 
 act_aggregations %>% 
-  left_join(treatment_function_lookup, by = c("SpecCode"="Code"))
+  left_join(merged_frame, by = c("SpecCode"="Code"))
   
 # This easily joins the lookup on to your data
   
@@ -103,6 +114,20 @@ xpath_element <- '//*[@id="element_abbreviated_mental_test_score.description"]'
 
 # Run the xpathTextR function to retrieve details of the element retrieved
 
-NHSDataDictionaRy::xpathTextR(url, xpath_element)
+result_list <- NHSDataDictionaRy::xpathTextR(url, xpath_element)
+print(result_list)
+
+
   
+
+## ----cleaned_text-------------------------------------------------------------
+# Use the returned result and do some text processing
+clean_text <- trimws(unlist(result_list$result))
+clean_text <- clean_text %>% 
+  gsub("[\r\n]", "", .) %>% #Remove new line and breaks
+  trimws() %>% #Get rid of any white space
+  as.character() #Cast to a character vector
+
+print(clean_text)
+
 

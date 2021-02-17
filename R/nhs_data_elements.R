@@ -17,6 +17,7 @@
 #'   \item url - the url passed to the parameter
 #'   \item full_url - the full url of where the data element is on the NHS Data Dictionary website
 #'   \item xpath_nat_code - utilises the element in the website and appends the link_short - to pull back only national codes from the dictionary site. NOTE: not all of the returns will have national code tables.
+#'   \item xpath_default_codes - pulls back the data dictionary default codes - these can be then used with the national codes
 #'   \item xpath_also_known - pulls back the data dictionary elements alias table - this will be available for all data elements
 #'
 #' }
@@ -48,6 +49,7 @@ nhs_data_elements <- function(){
   extracted_string_amend <- substr(extracted_string,1, html_loc-1)
   list_links$full_url <- as.character(paste0("https://datadictionary.nhs.uk/", list_links$url))
   list_links$xpath_nat_code <- paste0("//*[@id=", "\"element_",extracted_string_amend, '.national_codes\"]/div/div/table')
+  list_links$xpath_default_code <- paste0("//*[@id=", "\"element_",extracted_string_amend, '.default_codes\"]/div/div/table')
   list_links$xpath_also_known <- paste0("//*[@id=", "\"element_",extracted_string_amend, '.also_known_as\"]/div/div/table')
 
   return(list_links)
