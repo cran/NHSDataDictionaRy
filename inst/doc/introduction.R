@@ -74,22 +74,13 @@ national_codes <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
                           xpath = reduced_tibble$xpath_nat_code, 
                           title = "NHS Hospital Activity Treatment Function National Codes")
 
-default_codes <- NHSDataDictionaRy::tableR(url=reduced_tibble$full_url,
-                          xpath = reduced_tibble$xpath_default_code, 
-                          title = "NHS Hospital Activity Treatment Function Default Codes")
 
-
-# Here you could merge the codes - as you will have national and default codes
-
-merged_frame <- national_codes %>% 
-  dplyr::bind_rows(default_codes)
 
 
 # The query has returned results, if the url does not have a lookup table an error will be thrown
 
 print(head(national_codes,10))
-print(head(default_codes), 10)
-print(head(merged_frame))
+
 
   
 
@@ -102,7 +93,7 @@ act_aggregations <- tibble(SpecCode = as.character(c(101,102,103, 104, 105)),
 # Use dplyr to join the NHS activity by specialty code
 
 act_aggregations %>% 
-  left_join(merged_frame, by = c("SpecCode"="Code"))
+  left_join(national_codes, by = c("SpecCode"="Code"))
   
 # This easily joins the lookup on to your data
   
@@ -129,5 +120,17 @@ clean_text <- clean_text %>%
   as.character() #Cast to a character vector
 
 print(clean_text)
+
+
+## ----opensafely---------------------------------------------------------------
+
+os_list <- NHSDataDictionaRy::openSafely_listR("opensafely/ace-inhibitor-medications")
+glimpse(os_list)
+
+
+## ----opensafely_two-----------------------------------------------------------
+
+os_limit_list <- openSafely_listR("opensafely/ace-inhibitor-medications", "2020-05-19")
+glimpse(os_limit_list)
 
 

@@ -517,49 +517,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb9-8"><a href="#cb9-8"></a>                          <span class="dt">xpath =</span> reduced_tibble<span class="op">$</span>xpath_nat_code, </span>
 <span id="cb9-9"><a href="#cb9-9"></a>                          <span class="dt">title =</span> <span class="st">&quot;NHS Hospital Activity Treatment Function National Codes&quot;</span>)</span>
 <span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a>default_codes &lt;-<span class="st"> </span>NHSDataDictionaRy<span class="op">::</span><span class="kw">tableR</span>(<span class="dt">url=</span>reduced_tibble<span class="op">$</span>full_url,</span>
-<span id="cb9-12"><a href="#cb9-12"></a>                          <span class="dt">xpath =</span> reduced_tibble<span class="op">$</span>xpath_default_code, </span>
-<span id="cb9-13"><a href="#cb9-13"></a>                          <span class="dt">title =</span> <span class="st">&quot;NHS Hospital Activity Treatment Function Default Codes&quot;</span>)</span>
-<span id="cb9-14"><a href="#cb9-14"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a></span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co"># The query has returned results, if the url does not have a lookup table an error will be thrown</span></span>
 <span id="cb9-15"><a href="#cb9-15"></a></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co"># Here you could merge the codes - as you will have national and default codes</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a></span>
-<span id="cb9-18"><a href="#cb9-18"></a>merged_frame &lt;-<span class="st"> </span>national_codes <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb9-19"><a href="#cb9-19"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">bind_rows</span>(default_codes)</span>
-<span id="cb9-20"><a href="#cb9-20"></a></span>
-<span id="cb9-21"><a href="#cb9-21"></a></span>
-<span id="cb9-22"><a href="#cb9-22"></a><span class="co"># The query has returned results, if the url does not have a lookup table an error will be thrown</span></span>
-<span id="cb9-23"><a href="#cb9-23"></a></span>
-<span id="cb9-24"><a href="#cb9-24"></a><span class="kw">print</span>(<span class="kw">head</span>(national_codes,<span class="dv">10</span>))</span>
-<span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt; # A tibble: 10 x 4</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt;    Code  Description              Dict_Type                  DttmExtracted      </span></span>
-<span id="cb9-27"><a href="#cb9-27"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;                      &lt;dttm&gt;             </span></span>
-<span id="cb9-28"><a href="#cb9-28"></a><span class="co">#&gt;  1 100   General Surgery Service  NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt;  2 101   Urology Service          NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt;  3 102   Transplant Surgery Serv~ NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-31"><a href="#cb9-31"></a><span class="co">#&gt;  4 103   Breast Surgery Service   NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-32"><a href="#cb9-32"></a><span class="co">#&gt;  5 104   Colorectal Surgery Serv~ NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-33"><a href="#cb9-33"></a><span class="co">#&gt;  6 105   Hepatobiliary and Pancr~ NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-34"><a href="#cb9-34"></a><span class="co">#&gt;  7 106   Upper Gastrointestinal ~ NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-35"><a href="#cb9-35"></a><span class="co">#&gt;  8 107   Vascular Surgery Service NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-36"><a href="#cb9-36"></a><span class="co">#&gt;  9 108   Spinal Surgery Service   NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="co">#&gt; 10 109   Bariatric Surgery Servi~ NHS Hospital Activity Tre~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-38"><a href="#cb9-38"></a><span class="kw">print</span>(<span class="kw">head</span>(default_codes), <span class="dv">10</span>)</span>
-<span id="cb9-39"><a href="#cb9-39"></a><span class="co">#&gt; # A tibble: 2 x 4</span></span>
-<span id="cb9-40"><a href="#cb9-40"></a><span class="co">#&gt;   Code  Description                   Dict_Type              DttmExtracted      </span></span>
-<span id="cb9-41"><a href="#cb9-41"></a><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                         &lt;chr&gt;                  &lt;dttm&gt;             </span></span>
-<span id="cb9-42"><a href="#cb9-42"></a><span class="co">#&gt; 1 199   Non-UK provider; TREATMENT F~ NHS Hospital Activity~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-43"><a href="#cb9-43"></a><span class="co">#&gt; 2 499   Non-UK provider; TREATMENT F~ NHS Hospital Activity~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-44"><a href="#cb9-44"></a><span class="kw">print</span>(<span class="kw">head</span>(merged_frame))</span>
-<span id="cb9-45"><a href="#cb9-45"></a><span class="co">#&gt; # A tibble: 6 x 4</span></span>
-<span id="cb9-46"><a href="#cb9-46"></a><span class="co">#&gt;   Code  Description              Dict_Type                   DttmExtracted      </span></span>
-<span id="cb9-47"><a href="#cb9-47"></a><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;                       &lt;dttm&gt;             </span></span>
-<span id="cb9-48"><a href="#cb9-48"></a><span class="co">#&gt; 1 100   General Surgery Service  NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-49"><a href="#cb9-49"></a><span class="co">#&gt; 2 101   Urology Service          NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-50"><a href="#cb9-50"></a><span class="co">#&gt; 3 102   Transplant Surgery Serv~ NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-51"><a href="#cb9-51"></a><span class="co">#&gt; 4 103   Breast Surgery Service   NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-52"><a href="#cb9-52"></a><span class="co">#&gt; 5 104   Colorectal Surgery Serv~ NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span>
-<span id="cb9-53"><a href="#cb9-53"></a><span class="co">#&gt; 6 105   Hepatobiliary and Pancr~ NHS Hospital Activity Trea~ 2021-02-17 14:16:44</span></span></code></pre></div>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="kw">print</span>(<span class="kw">head</span>(national_codes,<span class="dv">10</span>))</span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; # A tibble: 10 x 4</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt;    Code  Description              Dict_Type                  DttmExtracted      </span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;                      &lt;dttm&gt;             </span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;  1 100   General Surgery Service  NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;  2 101   Urology Service          NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt;  3 102   Transplant Surgery Serv~ NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt;  4 103   Breast Surgery Service   NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt;  5 104   Colorectal Surgery Serv~ NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt;  6 105   Hepatobiliary and Pancr~ NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt;  7 106   Upper Gastrointestinal ~ NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="co">#&gt;  8 107   Vascular Surgery Service NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a><span class="co">#&gt;  9 108   Spinal Surgery Service   NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt; 10 109   Bariatric Surgery Servi~ NHS Hospital Activity Tre~ 2021-03-30 10:55:01</span></span></code></pre></div>
 <p>Not all lookups will have associated national code tables, if they are not returned you will receive a message saying the lookup table is not available for this NHS Data Dictionary type.</p>
 </div>
 <div id="using-my-lookup-with-nhs-data" class="section level2">
@@ -573,15 +549,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-6"><a href="#cb10-6"></a><span class="co"># Use dplyr to join the NHS activity by specialty code</span></span>
 <span id="cb10-7"><a href="#cb10-7"></a></span>
 <span id="cb10-8"><a href="#cb10-8"></a>act_aggregations <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="st">  </span><span class="kw">left_join</span>(merged_frame, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;SpecCode&quot;</span>=<span class="st">&quot;Code&quot;</span>))</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="st">  </span><span class="kw">left_join</span>(national_codes, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;SpecCode&quot;</span>=<span class="st">&quot;Code&quot;</span>))</span>
 <span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; # A tibble: 5 x 6</span></span>
 <span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt;   SpecCode ActivityCounts Month Description    Dict_Type     DttmExtracted      </span></span>
 <span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;         &lt;dttm&gt;             </span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1 101                 247 May   Urology Servi~ NHS Hospital~ 2021-02-17 14:16:44</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; 2 102                 252 May   Transplant Su~ NHS Hospital~ 2021-02-17 14:16:44</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; 3 103                 243 May   Breast Surger~ NHS Hospital~ 2021-02-17 14:16:44</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; 4 104                 251 May   Colorectal Su~ NHS Hospital~ 2021-02-17 14:16:44</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; 5 105                 252 May   Hepatobiliary~ NHS Hospital~ 2021-02-17 14:16:44</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; 1 101                 253 May   Urology Servi~ NHS Hospital~ 2021-03-30 10:55:01</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; 2 102                 251 May   Transplant Su~ NHS Hospital~ 2021-03-30 10:55:01</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; 3 103                 252 May   Breast Surger~ NHS Hospital~ 2021-03-30 10:55:01</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; 4 104                 250 May   Colorectal Su~ NHS Hospital~ 2021-03-30 10:55:01</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; 5 105                 246 May   Hepatobiliary~ NHS Hospital~ 2021-03-30 10:55:01</span></span>
 <span id="cb10-18"><a href="#cb10-18"></a>  </span>
 <span id="cb10-19"><a href="#cb10-19"></a><span class="co"># This easily joins the lookup on to your data</span></span>
 <span id="cb10-20"><a href="#cb10-20"></a>  </span></code></pre></div>
@@ -614,7 +590,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb11-22"><a href="#cb11-22"></a><span class="co">#&gt; [2] &lt;body class=&quot;wh_topic_page frmBody&quot;&gt;\n        &lt;a href=&quot;#wh_topic_body&quot; cl ...</span></span>
 <span id="cb11-23"><a href="#cb11-23"></a><span class="co">#&gt; </span></span>
 <span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt; $datetime_access</span></span>
-<span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt; [1] &quot;2021-02-17 14:16:44 GMT&quot;</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt; [1] &quot;2021-03-30 10:55:01 BST&quot;</span></span>
 <span id="cb11-26"><a href="#cb11-26"></a><span class="co">#&gt; </span></span>
 <span id="cb11-27"><a href="#cb11-27"></a><span class="co">#&gt; $person_accessed</span></span>
 <span id="cb11-28"><a href="#cb11-28"></a><span class="co">#&gt; [1] &quot;GARYH - LAPTOP-GE3S96EI&quot;</span></span></code></pre></div>
@@ -633,6 +609,35 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; [1] &quot;Description                ABBREVIATED MENTAL </span><span class="al">TEST</span><span class="co"> SCORE is the               PERSON SCORE where the               ASSESSMENT TOOL TYPE is               &#39;Abbreviated Mental Test Score&#39;.            The score is in the range 0 to 10.&quot;</span></span></code></pre></div>
 <p>I have used the trim white space function to extract the result element from the returned list from the previous function and now I use piping to a gsub function to remove newlines and spaces, I use the trimws() command again to make sure the spacing is sorted and then I convert (cast) this into a character string. Finally, the results are printed.</p>
 </div>
+</div>
+<div id="getting-data-from-opensafely" class="section level2">
+<h2>Getting data from OpenSafely</h2>
+<p>A contribution has been added to the package to allow for the OpenSafely data to be examined. To get the <a href="https://codelists.opensafely.org/">OpenSafely data</a> you can specify the code list required and this will pull it into a list. To do this follow the below example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2"></a>os_list &lt;-<span class="st"> </span>NHSDataDictionaRy<span class="op">::</span><span class="kw">openSafely_listR</span>(<span class="st">&quot;opensafely/ace-inhibitor-medications&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">glimpse</span>(os_list)</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; Rows: 1,096</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt; Columns: 6</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; $ type          &lt;chr&gt; &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, ~</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; $ id            &lt;chr&gt; &quot;2.191211e+16&quot;, &quot;2.192711e+16&quot;, &quot;2.998391e+16&quot;, &quot;2.19124~</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; $ bnf_code      &lt;chr&gt; &quot;0205051AAAAAAAA&quot;, &quot;0205051AAAAAAAA&quot;, &quot;0205051AAAAAAAA&quot;,~</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt; $ nm            &lt;chr&gt; &quot;Perindopril tosilate 2.5mg tablets (Teva UK Ltd)&quot;, &quot;Per~</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#&gt; $ Dict_Type     &lt;chr&gt; &quot;Not Specified&quot;, &quot;Not Specified&quot;, &quot;Not Specified&quot;, &quot;Not ~</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="co">#&gt; $ DttmExtracted &lt;dttm&gt; 2021-03-30 10:55:02, 2021-03-30 10:55:02, 2021-03-30 10~</span></span></code></pre></div>
+<p>To limit the list to a specific timed list - you can add the next level down to bring back a specific list:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2"></a>os_limit_list &lt;-<span class="st"> </span><span class="kw">openSafely_listR</span>(<span class="st">&quot;opensafely/ace-inhibitor-medications&quot;</span>, <span class="st">&quot;2020-05-19&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">glimpse</span>(os_limit_list)</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; Rows: 1,096</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; Columns: 6</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; $ type          &lt;chr&gt; &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, &quot;amp&quot;, ~</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; $ id            &lt;chr&gt; &quot;2.191211e+16&quot;, &quot;2.192711e+16&quot;, &quot;2.998391e+16&quot;, &quot;2.19124~</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; $ bnf_code      &lt;chr&gt; &quot;0205051AAAAAAAA&quot;, &quot;0205051AAAAAAAA&quot;, &quot;0205051AAAAAAAA&quot;,~</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; $ nm            &lt;chr&gt; &quot;Perindopril tosilate 2.5mg tablets (Teva UK Ltd)&quot;, &quot;Per~</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; $ Dict_Type     &lt;chr&gt; &quot;Not Specified&quot;, &quot;Not Specified&quot;, &quot;Not Specified&quot;, &quot;Not ~</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; $ DttmExtracted &lt;dttm&gt; 2021-03-30 10:55:03, 2021-03-30 10:55:03, 2021-03-30 10~</span></span></code></pre></div>
+<p>This extends the functionality of the tableR wrapper to pull back the HTML tables, and has been added as its specific function for convenience in working with the OpenSafely site.</p>
+<p>To understand the OpenSafely site, please see <a href="https://codelists.opensafely.org/docs/">Documentation</a>.</p>
 </div>
 </div>
 <div id="wrapping-up" class="section level1">
