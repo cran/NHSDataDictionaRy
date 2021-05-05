@@ -4,10 +4,12 @@
 \alias{linkScrapeR}
 \title{linkScrapeR}
 \usage{
-linkScrapeR(url)
+linkScrapeR(url, SSL_needed = FALSE)
 }
 \arguments{
 \item{url}{The website URL to detect active anchor hyperlink tags and extract them into a tibble}
+
+\item{SSL_needed}{Default - FALSE - Boolean to indicate whether to need a SSL certificate}
 }
 \value{
 A tibble (class data.frame) with all active hyperlinks on the website for the URL (uniform resource locator) passed to the function.

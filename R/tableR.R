@@ -21,43 +21,56 @@
 #'
 
 tableR <- function(url, xpath, title="Not Specified", add_zero_prefix = FALSE, ...){
+  tryCatch(
+    expr = {
+        if (is.null(url) | url == "" | length(url)==0){
+          stop("The URL of the specific page needs to be entered")
+        }
+
+        if (is.null(xpath) | xpath==""){
+          stop(cat("The xpath of the HTML element needs to be specified.\n",
+                   "This can be obtained by using the Inspect function in most web browsers.\n", sep=""))
+        }
+
+        if (!is.character(url) | !is.character(xpath)){
+          stop("The inputs for this function are character strings. Please make sure data type characters are used.")
+        }
+
+        if (add_zero_prefix==FALSE){
+          return_df <- dplyr::tibble(
+            scrapeR(url, xpath, ...),
+            Dict_Type = title,
+            DttmExtracted = Sys.time()
+          )
+        } else{
+          return_df <- dplyr::tibble(
+            scrapeR(url, xpath, ...),
+            Dict_Type = title,
+            DttmExtracted = Sys.time()
+          )
 
 
-  if (is.null(url) | url == "" | length(url)==0){
-    stop("The URL of the specific page needs to be entered")
-  }
+          return_df$Code <- paste0("0", trimws(return_df$Code))
+          return_df$Code <- ifelse(nchar(return_df$Code) > 2, substr(return_df$Code, 2,nchar(return_df$Code)),
+                                   return_df$Code)
 
-  if (is.null(xpath) | xpath==""){
-    stop(cat("The xpath of the HTML element needs to be specified.\n",
-             "This can be obtained by using the Inspect function in most web browsers.\n", sep=""))
-  }
+        }
 
-  if (!is.character(url) | !is.character(xpath)){
-    stop("The inputs for this function are character strings. Please make sure data type characters are used.")
-  }
+        return(return_df)
 
-  if (add_zero_prefix==FALSE){
-    return_df <- dplyr::tibble(
-      scrapeR(url, xpath, ...),
-      Dict_Type = title,
-      DttmExtracted = Sys.time()
-    )
-  } else{
-    return_df <- dplyr::tibble(
-      scrapeR(url, xpath, ...),
-      Dict_Type = title,
-      DttmExtracted = Sys.time()
-    )
+    },
+      error = function(e){
+        return_df <- NULL
+        return(return_df)
+        message("Please make sure url and xpath have been passed to function and make sure you are connected to the internet.")
 
 
-      return_df$Code <- paste0("0", trimws(return_df$Code))
-      return_df$Code <- ifelse(nchar(return_df$Code) > 2, substr(return_df$Code, 2,nchar(return_df$Code)),
-                               return_df$Code)
-
-  }
-
-  try(return(return_df), silent=F)
+      })
 
 }
+
+
+
+
 
 

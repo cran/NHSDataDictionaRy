@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----setup--------------------------------------------------------------------
+## ----setup, message=FALSE, echo=TRUE------------------------------------------
 library(NHSDataDictionaRy)
 library(dplyr)
 library(magrittr)
@@ -65,8 +65,12 @@ print(head(results, 20))
 
 ## ----tableR_example-----------------------------------------------------------
 # Filter by a specific lookup required
-reduced_tibble <- 
+if(is.null(nhs_tibble)){
+  print("The NHS tibble has not loaded, this could be due to internet connection issues.")
+} else{
+  reduced_tibble <-
   dplyr::filter(nhs_tibble, link_name == "ACTIVITY TREATMENT FUNCTION CODE")
+}
 
 #Use the tableR function to query the NHS Data Dictionary website and return the associate tibble
 
@@ -92,8 +96,14 @@ act_aggregations <- tibble(SpecCode = as.character(c(101,102,103, 104, 105)),
 
 # Use dplyr to join the NHS activity by specialty code
 
-act_aggregations %>% 
+if(is.null(national_codes)){
+  print("The NHS tibble has not loaded, this could be due to internet connection issues.")
+} else{
+  act_aggregations %>% 
   left_join(national_codes, by = c("SpecCode"="Code"))
+}
+
+
   
 # This easily joins the lookup on to your data
   
@@ -123,14 +133,13 @@ print(clean_text)
 
 
 ## ----opensafely---------------------------------------------------------------
+# Check if the connection has returned any values
+if(is.null(result_list)){
+  print("There is an issue with the internet. This function cannot be used until the internet is available.")
+} else{
+  os_list <- NHSDataDictionaRy::openSafely_listR("opensafely/ace-inhibitor-medications")
+  glimpse(os_list)
+}
 
-os_list <- NHSDataDictionaRy::openSafely_listR("opensafely/ace-inhibitor-medications")
-glimpse(os_list)
-
-
-## ----opensafely_two-----------------------------------------------------------
-
-os_limit_list <- openSafely_listR("opensafely/ace-inhibitor-medications", "2020-05-19")
-glimpse(os_limit_list)
 
 
