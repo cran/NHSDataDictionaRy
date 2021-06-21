@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 # Context
 
-This package has been commissioned by the NHS-R community and is intended to be used to web scrape the [NHS Data Dictionary website](https://datadictionary.nhs.uk/data_elements_overview.html#dataElement_overview) for useful lookup tables. The NHS-R community have been pivotal in getting this package off the ground. 
+This package has been commissioned by the NHS-R community and is intended to be used to web scrape the [NHS Data Dictionary website](https://datadictionary.nhs.uk/data_elements_overview.html#dataElement_overview) for useful look up tables. The NHS-R community have been pivotal in getting this package off the ground. 
 
 The package is maintained by [Gary Hutson - Head of Advanced Analytics at Arden and GEM Commissioning Support Unit](https://www.ardengemcsu.nhs.uk/) and to contact the maintainer directly you can navigate to this [site](https://hutsons-hacks.info/). 
 
@@ -119,7 +119,7 @@ This function can analyse a website and get all the current hyperlinks of a webs
 
 ```{r link_scrapeR}
 # Analyse all the links on a website
-website_url <- "https://nhsrcommunity.com/home/webinars/"
+website_url <- "https://hutsons-hacks.info/"
 results <- NHSDataDictionaRy::linkScrapeR(website_url)
 print(head(results, 20))
 
@@ -197,6 +197,16 @@ if(is.null(national_codes)){
 ```
 The benefit of having it in an R package is that you can instantaneously have a lookup of the most relevant and up to date NHS lookups, replacing the need to have a massive data warehouse to capture this information. 
 
+## nhs_table_findeR function
+This function allows you to perform the steps above in one consolidated function. This means that there is no need to call the nhs_data_elements() function and tableR functions separately, they are all nested in this nice convenience function. This is how you would use it:
+
+```{r table_batch, message=TRUE, echo=TRUE}
+nhs_table_findeR("ACCOMMODATION STATUS CODE", title="Accomodation Status Code National Code Lookup")
+#Lower case still works
+glimpse(nhs_table_findeR("accommodation status code"))
+
+```
+
 ## xpathTextR function
 
 This function has been provided to return elements from a website, other than html tables, as these functions predominately work with tables. The below example shows how this can be implemented, but requires the retrieval of the xpath via the Inspect command in Google Chrome (CTRL + SHIFT + I):
@@ -237,7 +247,7 @@ I have used the trim white space function to extract the result element from the
 
 ## Getting data from OpenSafely
 
-A contribution has been added to the package to allow for the OpenSafely data to be examined. To get the [OpenSafely data](https://codelists.opensafely.org/) you can specify the code list required and this will pull it into a list. To do this follow the below example:
+A contribution has been added to the package to allow for the OpenSafely data to be examined. To get the [OpenSafely data](https://www.opencodelists.org/docs/) you can specify the code list required and this will pull it into a list. To do this follow the below example:
 
 ```{r opensafely}
 # Check if the connection has returned any values
@@ -252,8 +262,6 @@ if(is.null(result_list)){
 ```
 
 This extends the functionality of the tableR wrapper to pull back the HTML tables, and has been added as its specific function for convenience in working with the OpenSafely site. 
-
-To understand the OpenSafely site, please see [Documentation](https://codelists.opensafely.org/docs/).
 
 # Wrapping up
 

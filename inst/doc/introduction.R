@@ -53,7 +53,7 @@ class(string_length)
 
 ## ----link_scrapeR-------------------------------------------------------------
 # Analyse all the links on a website
-website_url <- "https://nhsrcommunity.com/home/webinars/"
+website_url <- "https://hutsons-hacks.info/"
 results <- NHSDataDictionaRy::linkScrapeR(website_url)
 print(head(results, 20))
 
@@ -107,6 +107,12 @@ if(is.null(national_codes)){
   
 # This easily joins the lookup on to your data
   
+
+## ----table_batch, message=TRUE, echo=TRUE-------------------------------------
+nhs_table_findeR("ACCOMMODATION STATUS CODE", title="Accomodation Status Code National Code Lookup")
+#Lower case still works
+glimpse(nhs_table_findeR("accommodation status code"))
+
 
 ## ----xpath_text---------------------------------------------------------------
 

@@ -1,9 +1,9 @@
 #' openSafely_listR function
 #'
 #' This function uses the \code{\link{tableR}} parent function to return a table of elements, specifically from the OpenSafely Code List
-#' \url{https://codelists.opensafely.org/}
+#' \url{https://www.opencodelists.org/}
 #'
-#' @param list_name The code list ID from \url{https://codelists.opensafely.org/} for which to return the National table of elements, for example
+#' @param list_name The code list ID from \url{https://www.opencodelists.org/} for which to return the National table of elements, for example
 #' "opensafely/ace-inhibitor-medications"
 #' @param version The version of the code list if not the most recent
 #' @param ... Function forwarding to parent function to pass additional arguments to function (e.g. title, add_zero_prefix)
@@ -15,7 +15,7 @@
 #' \itemize{
 #'   \item type - the OpenSafely type
 #'   \item id - the id for the OpenSafely element
-#'   \item bnf_code - British Nationa Formulary - NICE guidelines code
+#'   \item bnf_code - British National Formulary - NICE guidelines code
 #'   \item nm - medicine type, dosage and manufacturer
 #'   \item Dict_type - title specified for dictionary
 #'   \item DttmExtracted - the date and time the code set was extracted
