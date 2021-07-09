@@ -1,7 +1,7 @@
-edfa2365df92d822b476b874f87e6ba9 *DESCRIPTION
+69df4ee08d1469fb8712cd72d8b9df63 *DESCRIPTION
 c21948b75b427e59031dab4d7c80419d *LICENSE
 d5280e950a11e175fd8990dd3080ad1b *NAMESPACE
-54d348512f6163488d63a322144ff893 *NEWS.md
+cf5f267f1995cfeeca9102a839058e88 *NEWS.md
 31c766a2121ea0422ecc23627447aea7 *R/left_xl.R
 9d6ea4252e8ea9c876b2c91f65521c70 *R/len_xl.R
 8a8277e7ef9ae6c4666f9d7d72e4d5a1 *R/linkScrapeR.R
@@ -17,7 +17,7 @@ c73aff6c63a68eecb9942927e806c921 *build/vignette.rds
 39d3a7ac2dbac2bd2183ba9849f224e8 *inst/WORDLIST
 c5836e7768b17868a2ce51f4f60a8b28 *inst/doc/introduction.R
 7480e7217667a5d2d3f63dbad643c179 *inst/doc/introduction.Rmd
-51897e8a3fac660da510a084cfebfbe5 *inst/doc/introduction.html
+b82aa58db894e483b1909c7ab85f9e0f *inst/doc/introduction.html
 4360cdb167b19cf38db960e7d2f7cb0f *man/figures/logo.png
 a605127c455fddbbb61feeecba4200f3 *man/figures/logobgr.png
 2c36d5944dc8d20726ad75f23d6ccaf0 *man/left_xl.Rd
